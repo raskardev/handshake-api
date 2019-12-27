@@ -9,12 +9,18 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
-    "start-database": "docker run -p 5432:5432 -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test1234 mdillon/postgis",
+    "start-database": "docker run -p 5432:5432 -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test1234 postgres",
     "lint": "node_modules/.bin/eslint src/**/*.js",
     "test": "npm run prisma:generate && ava",
     "prisma": "node_modules/.bin/prisma2 init",
     "prisma:dev": "node_modules/.bin/prisma2 dev",
     "prisma:generate": "node_modules/.bin/prisma2 generate"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run test"
+    }
   },
   "dependencies": {
     "@hapi/joi": "^16.1.8",
@@ -32,10 +38,11 @@
     "ava": "^2.4.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-ava": "^9.0.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^3.1.0",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "prisma2": "^2.0.0-preview019"
