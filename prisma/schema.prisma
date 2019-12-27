@@ -1,0 +1,39 @@
+generator photon {
+  provider = "photonjs"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://test:test1234@localhost:5432/test?connection_limit=1&schema=public"
+}
+
+model spatial_ref_sys {
+  auth_name String?
+  auth_srid Int?
+  proj4text String?
+  srid      Int     @id
+  srtext    String?
+}
+
+model User {
+  id        String   @default(uuid()) @id
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Product {
+  id          String  @default(uuid()) @id
+  name        String
+  description String
+  price       Float
+  seller      User
+  images      Image[]
+}
+
+model Image {
+  id  String @default(uuid()) @id
+  url String
+}
